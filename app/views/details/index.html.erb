@@ -1,0 +1,6 @@
+<%= link_to "新規工事内容作成", new_detail_path, class: :nav__btn %>
+
+
+<% @details.each do |detail| %>
+  <%= link_to detail.abbreviation, edit_detail_path(detail.id), class: :nav__btn %>
+  <%end %>

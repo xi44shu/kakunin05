@@ -1,0 +1,5 @@
+<%= form_with model: @detail, url:details_path, local: true do |f| %>
+<%= f.label :工事内容を入力, class: 'lavel' %>
+<%= f.text_field :abbreviation, placeholder:"工事内容", maxlength:"40" %>
+<%= f.submit "登録する" %>
+<% end %>

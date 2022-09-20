@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   resources :teams
   resources :public_utilities
   resources :trading_companies
+  resources :details
 
 end
