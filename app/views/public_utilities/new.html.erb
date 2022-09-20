@@ -1,0 +1,11 @@
+
+
+<%= form_with model: @public_utility, url:public_utilities_path, local: true do |f| %>
+<%= f.label :事業体名を入力, class: 'lavel' %>
+<%= f.text_field :pu_name, placeholder:"事業体名" %>
+<%= f.label :都道府県を選択, class: 'lavel' %>
+<%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {}, {class:"pu_prefecture-select"}) %>
+<%= f.label :仕様を入力, class: 'lavel' %>
+<%= f.text_field :pc_specification, placeholder:"仕様" %>
+<%= f.submit "登録する" %>
+<% end %>

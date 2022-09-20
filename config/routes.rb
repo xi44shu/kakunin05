@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   }
   root to: "teams#new"
   resources :teams
+  resources :public_utilities
 
 end

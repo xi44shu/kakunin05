@@ -1,0 +1,8 @@
+<%= link_to "新規事業体作成", new_public_utility_path, class: :nav__btn %>
+
+
+<% @public_utilities.each do |public_utility| %>
+  <%= link_to public_utility.pu_name, edit_public_utility_path(public_utility.id), class: :nav__btn %>
+  <%= public_utility.pu_prefecture %>
+  <%= public_utility.pu_specification %>
+  <%end %>
