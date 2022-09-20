@@ -1,0 +1,8 @@
+<%= link_to "新規商社担当者作成", new_trading_company_path, class: :nav__btn %>
+
+
+<% @trading_companies.each do |trading_company| %>
+  <%= link_to trading_company.tc_name, edit_trading_company_path(trading_company.id), class: :nav__btn %>
+  <%= trading_company.tc_contact_person %>
+  <%= trading_company.tc_telephone %>
+  <%end %>
