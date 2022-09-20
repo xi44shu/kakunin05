@@ -1,0 +1,90 @@
+
+<!-- 予約フォーム -->
+<%= form_with model: @schedule, url: schedules_path, local: true do |f| %>
+<%= f.label :日付を選択, class: 'lavel' %>
+<%= f.date_field :scheduled_date, class: 'date-select' %>
+<%= f.label :施工班を選択, class: 'lavel' %>
+<%= f.collection_select(:team_id, Team.all, :id, :team_name, {}, {class:"team-select"}) %>
+<%= f.label :時間帯を選択, class: 'lavel' %>
+<%= f.collection_select(:time_zone_id, TimeZone.all, :id, :name, {}, {class:"time_zone-select"}) %>
+<%= f.label :場所を選択, class: 'lavel' %>
+<%= f.collection_select(:mie_id, Mie.all, :id, :name, {}, {class:"mie-select"}) %>
+<%= f.label :サイズクラスを選択, class: 'lavel' %>
+<%= f.collection_select(:size_id, Size.all, :id, :name, {}, {class:"size-select"}) %>
+<%= f.label :予約確度を選択, class: 'lavel' %>
+<%= f.collection_select(:accuracy_id, Accuracy.all, :id, :name, {}, {class:"accuracy-select"}) %>
+<%= f.submit "登録する" %>
+<% end %>
+
+<div class='calendarsbox'>
+  <div class="calender_header">
+    <div class='day-title'>日にち\班</div>
+      <!-- 稼働している班数分繰り返す -->
+      <% @team.each do |team| %>
+        <!-- 午前・午後の2回繰り返す -->
+        <% 2.times do |tz| %> 
+          <% tzid = 2 + tz %>
+          <div class='team-title'>
+                <%= team.team_name %>班 <%= TimeZone.find(tzid).name %>枠
+          </div>
+        <% end %>
+      <% end %>
+  </div>
+  <div class='calendars'>
+    <div class='calendar'>
+      <% @week_days.each do |day|%>
+        <div class='day-item'>
+          <div class='date'>
+            <%= day[:month] %>/<%= day[:date] %><br><%= day[:wday] %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+      <!-- 稼働している班数分繰り返す -->
+      <% @team.each do |team| %>
+            <!-- １班に付き午前１週間・午後１週間の2回繰り返す -->
+            <% 2.times do |tz| %> 
+            <% tzid = 2 + tz %>
+              <div class='calendar'>
+                <% @week_days.each do |day| %>
+                  <div class='item'>
+                    <div class='content'>
+                      <% @schedule.each do |cal| %>
+                        <% if day[:scheduled_date] == cal.scheduled_date && cal.time_zone_id == tzid && cal.team_id == team.id%>
+                          <div class="content_header">
+                            <div class="content_detail"><%= link_to "予約詳細", schedule_path(cal.id), class: :nav__btn %></div>
+                            <div class="content_detail"><%= Size.find(cal.size_id).name%></div>
+                          </div>
+                          <div class="content_body">
+                              <% if cal.accuracy_id == 3 %> 
+                                <div class="content_body_top">
+                                  <div class="content_detail">時間:<%= StartTime.find(cal.start_time_id).name%></div>
+                                  <div class="content_detail">事業体:<%= cal.public_utility_id%></div>
+                                </div>
+                                <div class="content_body_middle">
+                                  <div class="content_detail">商社:<%= cal.trading_company_id%></div>
+                                  <div class="content_detail">元請:<%= cal.prime_contractor%></div>
+                                </div>
+                                <div class="content_body_bottom">
+                                  <div>内容:<%= cal.detail_id%></div>
+                                </div>
+                              <%else cal.accuracy_id == 2%>
+                                <div class="content_body_top">
+                                  <div class="content_detail">場所:<%= Mie.find(cal.mie_id).name%></div>
+                                </div>
+                                <div class="content_body_middle">
+                                  <div class="content_detail">これは仮予約です</div>
+                                    <div class="content_detail"><%= FirstContact.find(cal.first_contact_id).name%>より問い合わせ</div>
+                                </div>
+                              <%end%>
+                            </div>
+                          <%end%>
+                        <%end%>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+          <% end %>
+      <% end %>
+  </div>
+</div>

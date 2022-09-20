@@ -11,10 +11,11 @@ Rails.application.routes.draw do
     passwords:     'users/passwords',
     registrations: 'users/registrations'
   }
-  root to: "teams#new"
+  root to: "schedules#index"
   resources :teams
   resources :public_utilities
   resources :trading_companies
   resources :details
+  resources :schedules
 
 end

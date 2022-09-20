@@ -1,0 +1,28 @@
+<%= form_with model: @schedule, url: schedules_path, local: true do |f| %>
+<div class="hissu_input">必須項目</div>
+<%= f.label :日付を選択, class: 'lavel' %>
+<%= f.date_field :scheduled_date, class: 'date-select' %>
+<%= f.label :施工班を選択, class: 'lavel' %>
+<%= f.collection_select(:team_id, Team.where(work: '1'), :id, :team_name, {}, {class:"team-select"}) %>
+<%= f.label :時間帯を選択, class: 'lavel' %>
+<%= f.collection_select(:time_zone_id, TimeZone.all, :id, :name, {}, {class:"time_zone-select"}) %>
+<%= f.label :サイズを選択, class: 'lavel' %>
+<%= f.collection_select(:size_id, Size.all, :id, :name, {}, {class:"size-select"}) %>
+<div class="nini_input">任意項目</div>
+<%= f.label :開始時間を入力, class: 'lavel' %>
+<%= f.collection_select(:start_time_id, StarTime.all, :id, :name, {}, {class:"start_time-select"}) %>
+<%= f.label :事業体を入力, class: 'lavel' %>
+<%= f.collection_select(:public_utility_id, PublicUtility.all, :id, :name, {}, {class:"public_utility-select"}) %>
+<%= f.label :商社を入力, class: 'lavel' %>
+<%= f.collection_select(:trading_company_id, TradingCompany.all, :id, :name, {}, {class:"trading_company-select"}) %>
+<%= f.label :元請業者を入力, class: 'lavel' %>
+<%= f.text_field :prime_contractor, class: 'prime_contractor-input' %>
+<%= f.label :工事内容を入力, class: 'lavel' %>
+<%= f.collection_select(:detail_id, Detail.all, :id, :name, {}, {class:"detail-select"}) %>
+<%= f.label :営業担当を入力, class: 'lavel' %>
+<%= f.collection_select(:sales_staff, User.all, :id, :name, {}, {class:"user-select"}) %>
+<%= f.label :コメントを入力, class: 'lavel' %>
+<%= f.text_field :content, class: 'content-input' %>
+
+<%= f.submit "登録する" %>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_20_073130) do
+ActiveRecord::Schema.define(version: 2022_09_20_091228) do
 
   create_table "details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "abbreviation", null: false
@@ -37,6 +37,32 @@ ActiveRecord::Schema.define(version: 2022_09_20_073130) do
     t.string "pc_specification"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.date "scheduled_date", null: false
+    t.integer "time_zone_id", null: false
+    t.bigint "team_id", null: false
+    t.bigint "manager_id", null: false
+    t.integer "mie_id", null: false
+    t.integer "accuracy_id", null: false
+    t.integer "size_id", null: false
+    t.integer "start_time_id"
+    t.integer "first_contact_id"
+    t.bigint "public_utility_id"
+    t.bigint "trading_company_id"
+    t.string "prime_contractor"
+    t.bigint "detail_id"
+    t.bigint "sales_staff_id"
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["detail_id"], name: "index_schedules_on_detail_id"
+    t.index ["manager_id"], name: "index_schedules_on_manager_id"
+    t.index ["public_utility_id"], name: "index_schedules_on_public_utility_id"
+    t.index ["sales_staff_id"], name: "index_schedules_on_sales_staff_id"
+    t.index ["team_id"], name: "index_schedules_on_team_id"
+    t.index ["trading_company_id"], name: "index_schedules_on_trading_company_id"
   end
 
   create_table "teams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -67,4 +93,10 @@ ActiveRecord::Schema.define(version: 2022_09_20_073130) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "schedules", "details"
+  add_foreign_key "schedules", "managers"
+  add_foreign_key "schedules", "public_utilities"
+  add_foreign_key "schedules", "teams"
+  add_foreign_key "schedules", "trading_companies"
+  add_foreign_key "schedules", "users", column: "sales_staff_id"
 end
