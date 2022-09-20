@@ -24,7 +24,7 @@ class PublicUtilitiesController < ApplicationController
   private
 
   def publicutility_params
-    params.permit(:pu_name )
+    params.permit(:pu_name, :prefecture_id, :pc_specification )
   end
 
 end
