@@ -4,7 +4,7 @@
 <%= f.label :日付を選択, class: 'lavel' %>
 <%= f.date_field :scheduled_date, class: 'date-select' %>
 <%= f.label :施工班を選択, class: 'lavel' %>
-<%= f.collection_select(:team_id, Team.all, :id, :team_name, {}, {class:"team-select"}) %>
+<%= f.collection_select(:team_id, Team.where(work: '1'), :id, :team_name, {}, {class:"team-select"}) %>
 <%= f.label :時間帯を選択, class: 'lavel' %>
 <%= f.collection_select(:time_zone_id, TimeZone.all, :id, :name, {}, {class:"time_zone-select"}) %>
 <%= f.label :場所を選択, class: 'lavel' %>
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="content_body_bottom">
                                   <div>内容:<%= cal.detail_id%></div>
-                                </div>
+
                               <%else cal.accuracy_id == 2%>
                                 <div class="content_body_top">
                                   <div class="content_detail">場所:<%= Mie.find(cal.mie_id).name%></div>
@@ -76,7 +76,13 @@
                                   <div class="content_detail">これは仮予約です</div>
                                     <div class="content_detail"><%= FirstContact.find(cal.first_contact_id).name%>より問い合わせ</div>
                                 </div>
-                              <%end%>
+                                <div class="content_body_bottom">
+
+                                  <%end%>
+                                    <% if cal.content != nil %>
+                                  <div class="content_detail">コメント:有り</div>
+                                </div>
+                                <%end%>
                             </div>
                           <%end%>
                         <%end%>
