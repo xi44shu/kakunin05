@@ -1,6 +1,6 @@
 class PublicUtilitiesController < ApplicationController
   def index
-    @publicutility = PublicUtility.all
+    @publicutilities = PublicUtility.all
   end
 
   def new
